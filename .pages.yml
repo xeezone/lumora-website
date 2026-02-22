@@ -1,0 +1,909 @@
+# .pages.yml - Pages CMS Configuration for LUMORA Website
+
+media:
+  - name: images
+    label: Images
+    input: images
+    output: /images
+    categories: [image]
+    extensions: [jpg, jpeg, png, gif, svg, webp]
+  - name: downloads
+    label: Downloads
+    input: downloads
+    output: /downloads
+    categories: [document]
+    extensions: [pdf, doc, docx]
+
+content:
+  # Site Configuration
+  - name: site
+    label: Site Settings
+    path: config/site.json
+    type: file
+    format: json
+    fields:
+      - name: site
+        label: Site Information
+        type: object
+        fields:
+          - name: name
+            label: Site Name
+            type: string
+            required: true
+          - name: url
+            label: Website URL
+            type: string
+            pattern: 
+              regex: '^https?:\/\/[^\s]+$'
+              message: 'Must be a valid URL starting with http:// or https://'
+          - name: currency
+            label: Currency
+            type: string
+            default: PKR
+          - name: currencySymbol
+            label: Currency Symbol
+            type: string
+            default: ₨
+          - name: phone
+            label: Phone Number
+            type: string
+          - name: whatsapp
+            label: WhatsApp Number
+            type: string
+          - name: email
+            label: Email Address
+            type: string
+            pattern:
+              regex: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+              message: 'Must be a valid email address'
+      - name: seo
+        label: SEO Settings
+        type: object
+        fields:
+          - name: title
+            label: Default Title
+            type: string
+          - name: description
+            label: Default Description
+            type: text
+            options:
+              maxlength: 160
+          - name: keywords
+            label: Keywords
+            type: string
+          - name: ogImage
+            label: Open Graph Image
+            type: image
+            options:
+              media: images
+      - name: announcement
+        label: Announcement Bar
+        type: object
+        fields:
+          - name: enabled
+            label: Enable Announcement
+            type: boolean
+            default: false
+          - name: text
+            label: Announcement Text
+            type: string
+          - name: link
+            label: Link URL
+            type: string
+          - name: backgroundColor
+            label: Background Color
+            type: string
+            default: '#D4AF37'
+          - name: textColor
+            label: Text Color
+            type: string
+            default: '#000000'
+
+  # Header
+  - name: header
+    label: Header
+    path: config/header.json
+    type: file
+    format: json
+    fields:
+      - name: enabled
+        label: Enable Header
+        type: boolean
+        default: true
+      - name: logo
+        label: Logo
+        type: object
+        fields:
+          - name: path
+            label: Logo Image
+            type: image
+            options:
+              media: images
+          - name: alt
+            label: Alt Text
+            type: string
+          - name: link
+            label: Logo Link
+            type: string
+            default: '/'
+      - name: menu
+        label: Navigation Menu
+        type: object
+        list:
+          min: 1
+          collapsible: true
+          summary: '{label}'
+        fields:
+          - name: id
+            label: Menu ID
+            type: string
+            required: true
+          - name: label
+            label: Menu Label
+            type: string
+            required: true
+          - name: url
+            label: URL
+            type: string
+            required: true
+          - name: enabled
+            label: Enabled
+            type: boolean
+            default: true
+      - name: ctaButtons
+        label: CTA Buttons
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: Button ID
+            type: string
+          - name: label
+            label: Button Text
+            type: string
+          - name: url
+            label: Button Link
+            type: string
+          - name: variant
+            label: Button Style
+            type: select
+            options:
+              values: [primary, secondary, outline]
+          - name: enabled
+            label: Enabled
+            type: boolean
+            default: true
+
+  # Hero Section
+  - name: hero
+    label: Hero Section
+    path: config/hero.json
+    type: file
+    format: json
+    fields:
+      - name: enabled
+        label: Enable Hero Section
+        type: boolean
+        default: true
+      - name: slides
+        label: Hero Slides
+        type: object
+        list:
+          min: 1
+          collapsible: true
+          summary: 'Slide {index} - {headline.text}'
+        fields:
+          - name: id
+            label: Slide ID
+            type: string
+          - name: enabled
+            label: Enable Slide
+            type: boolean
+            default: true
+          - name: background
+            label: Background
+            type: object
+            fields:
+              - name: type
+                label: Background Type
+                type: select
+                options:
+                  values: [image, color, video]
+              - name: src
+                label: Background Image
+                type: image
+                options:
+                  media: images
+              - name: overlayOpacity
+                label: Overlay Opacity
+                type: number
+                options:
+                  min: 0
+                  max: 1
+                  step: 0.1
+          - name: headline
+            label: Headline
+            type: object
+            fields:
+              - name: text
+                label: Headline Text
+                type: string
+              - name: highlightedText
+                label: Highlighted Word
+                type: string
+              - name: highlightColor
+                label: Highlight Color
+                type: string
+                default: '#D4AF37'
+          - name: price
+            label: Price Display
+            type: object
+            fields:
+              - name: enabled
+                label: Show Price
+                type: boolean
+              - name: current
+                label: Current Price
+                type: number
+              - name: original
+                label: Original Price
+                type: number
+          - name: primaryButton
+            label: Primary Button
+            type: object
+            fields:
+              - name: text
+                label: Button Text
+                type: string
+              - name: url
+                label: Button Link
+                type: string
+              - name: enabled
+                label: Enabled
+                type: boolean
+
+  # Features Cards
+  - name: features
+    label: Features
+    path: config/features.json
+    type: file
+    format: json
+    fields:
+      - name: enabled
+        label: Enable Features Section
+        type: boolean
+        default: true
+      - name: title
+        label: Section Title
+        type: string
+      - name: subtitle
+        label: Section Subtitle
+        type: string
+      - name: cards
+        label: Feature Cards
+        type: object
+        list:
+          min: 1
+          collapsible: true
+          summary: '{title}'
+        fields:
+          - name: id
+            label: Card ID
+            type: string
+          - name: enabled
+            label: Enable Card
+            type: boolean
+            default: true
+          - name: title
+            label: Card Title
+            type: string
+          - name: description
+            label: Description
+            type: text
+          - name: icon
+            label: Icon
+            type: object
+            fields:
+              - name: type
+                label: Icon Type
+                type: select
+                options:
+                  values: [remixicon, fontawesome, image]
+              - name: name
+                label: Icon Name
+                type: string
+              - name: color
+                label: Icon Color
+                type: string
+                default: '#D4AF37'
+          - name: button
+            label: Card Button
+            type: object
+            fields:
+              - name: text
+                label: Button Text
+                type: string
+              - name: url
+                label: Button Link
+                type: string
+              - name: enabled
+                label: Enable Button
+                type: boolean
+                default: false
+
+  # Products
+  - name: products
+    label: Products
+    path: config/products.json
+    type: file
+    format: json
+    fields:
+      - name: enabled
+        label: Enable Product System
+        type: boolean
+        default: true
+      - name: products
+        label: Products List
+        type: object
+        list:
+          min: 0
+          collapsible: true
+          summary: '{title} - PKR {price}'
+        fields:
+          - name: id
+            label: Product ID
+            type: string
+            required: true
+          - name: enabled
+            label: Enable Product
+            type: boolean
+            default: true
+          - name: title
+            label: Product Title
+            type: string
+            required: true
+          - name: shortDescription
+            label: Short Description
+            type: text
+          - name: fullDescription
+            label: Full Description
+            type: rich-text
+            options:
+              media: images
+          - name: price
+            label: Price
+            type: number
+            required: true
+          - name: comparePrice
+            label: Compare-at Price
+            type: number
+          - name: currency
+            label: Currency
+            type: string
+            default: PKR
+          - name: stockQuantity
+            label: Stock Quantity
+            type: number
+            required: true
+          - name: stockStatus
+            label: Stock Status
+            type: select
+            options:
+              values: [in_stock, out_of_stock, pre_order]
+          - name: media
+            label: Product Media
+            type: object
+            fields:
+              - name: mainImage
+                label: Main Image
+                type: image
+                options:
+                  media: images
+                  required: true
+              - name: gallery
+                label: Gallery Images
+                type: image
+                options:
+                  multiple:
+                    max: 10
+                  media: images
+              - name: video
+                label: Product Video
+                type: object
+                fields:
+                  - name: url
+                    label: Video URL
+                    type: string
+                  - name: enabled
+                    label: Enable Video
+                    type: boolean
+          - name: variants
+            label: Product Variants
+            type: object
+            fields:
+              - name: enabled
+                label: Enable Variants
+                type: boolean
+              - name: options
+                label: Variant Options
+                type: object
+                list: true
+                fields:
+                  - name: name
+                    label: Option Name (e.g., Color)
+                    type: string
+                  - name: values
+                    label: Option Values
+                    type: string
+                    list: true
+              - name: combinations
+                label: Variant Combinations
+                type: object
+                list: true
+                fields:
+                  - name: id
+                    label: Variant ID
+                    type: string
+                  - name: sku
+                    label: SKU
+                    type: string
+                  - name: attributes
+                    label: Attributes
+                    type: object
+                    fields:
+                      - name: Color
+                        label: Color
+                        type: string
+                      - name: Size
+                        label: Size
+                        type: string
+                  - name: priceAdjustment
+                    label: Price Adjustment
+                    type: number
+                  - name: stockQuantity
+                    label: Stock Quantity
+                    type: number
+                  - name: enabled
+                    label: Enable Variant
+                    type: boolean
+
+  # Categories
+  - name: categories
+    label: Categories
+    path: config/categories.json
+    type: file
+    format: json
+    fields:
+      - name: enabled
+        label: Enable Categories
+        type: boolean
+        default: true
+      - name: categories
+        label: Categories List
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: Category ID
+            type: string
+          - name: name
+            label: Category Name
+            type: string
+          - name: slug
+            label: URL Slug
+            type: string
+          - name: image
+            label: Category Image
+            type: image
+            options:
+              media: images
+          - name: description
+            label: Description
+            type: text
+          - name: featured
+            label: Featured Category
+            type: boolean
+          - name: products
+            label: Related Products
+            type: string
+            list: true
+
+  # Gallery
+  - name: gallery
+    label: Gallery
+    path: config/gallery.json
+    type: file
+    format: json
+    fields:
+      - name: enabled
+        label: Enable Gallery
+        type: boolean
+        default: true
+      - name: title
+        label: Section Title
+        type: string
+      - name: images
+        label: Gallery Images
+        type: object
+        list:
+          min: 1
+          collapsible: true
+          summary: '{caption}'
+        fields:
+          - name: id
+            label: Image ID
+            type: string
+          - name: enabled
+            label: Enable Image
+            type: boolean
+            default: true
+          - name: src
+            label: Image File
+            type: image
+            options:
+              media: images
+          - name: alt
+            label: Alt Text
+            type: string
+          - name: caption
+            label: Caption
+            type: string
+          - name: order
+            label: Display Order
+            type: number
+
+  # How It Works
+  - name: howItWorks
+    label: How It Works
+    path: config/how-it-works.json
+    type: file
+    format: json
+    fields:
+      - name: enabled
+        label: Enable Section
+        type: boolean
+        default: true
+      - name: title
+        label: Section Title
+        type: string
+      - name: steps
+        label: Steps
+        type: object
+        list:
+          min: 3
+          max: 6
+          collapsible: true
+          summary: 'Step {number}: {title}'
+        fields:
+          - name: id
+            label: Step ID
+            type: string
+          - name: number
+            label: Step Number
+            type: number
+          - name: title
+            label: Step Title
+            type: string
+          - name: description
+            label: Step Description
+            type: text
+          - name: icon
+            label: Icon
+            type: object
+            fields:
+              - name: name
+                label: Icon Name
+                type: string
+          - name: enabled
+            label: Enable Step
+            type: boolean
+            default: true
+
+  # Specifications
+  - name: specifications
+    label: Specifications
+    path: config/specifications.json
+    type: file
+    format: json
+    fields:
+      - name: enabled
+        label: Enable Section
+        type: boolean
+        default: true
+      - name: title
+        label: Section Title
+        type: string
+      - name: sections
+        label: Spec Sections
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: Section ID
+            type: string
+          - name: title
+            label: Section Title
+            type: string
+          - name: specs
+            label: Specifications
+            type: object
+            list: true
+            fields:
+              - name: label
+                label: Specification Name
+                type: string
+              - name: value
+                label: Specification Value
+                type: string
+              - name: unit
+                label: Unit
+                type: string
+
+  # Customer Reviews
+  - name: reviews
+    label: Customer Reviews
+    path: config/reviews.json
+    type: file
+    format: json
+    fields:
+      - name: enabled
+        label: Enable Reviews Section
+        type: boolean
+        default: true
+      - name: title
+        label: Section Title
+        type: string
+      - name: reviews
+        label: Reviews
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: Review ID
+            type: string
+          - name: enabled
+            label: Enable Review
+            type: boolean
+            default: true
+          - name: author
+            label: Author
+            type: object
+            fields:
+              - name: name
+                label: Name
+                type: string
+              - name: location
+                label: Location
+                type: string
+              - name: avatar
+                label: Avatar
+                type: object
+                fields:
+                  - name: type
+                    label: Avatar Type
+                    type: select
+                    options:
+                      values: [initials, image, none]
+                  - name: initials
+                    label: Initials
+                    type: string
+          - name: rating
+            label: Rating
+            type: number
+            options:
+              min: 1
+              max: 5
+          - name: content
+            label: Review Content
+            type: text
+
+  # FAQ
+  - name: faq
+    label: FAQ
+    path: config/faq.json
+    type: file
+    format: json
+    fields:
+      - name: enabled
+        label: Enable FAQ Section
+        type: boolean
+        default: true
+      - name: title
+        label: Section Title
+        type: string
+      - name: categories
+        label: FAQ Categories
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: Category ID
+            type: string
+          - name: name
+            label: Category Name
+            type: string
+          - name: enabled
+            label: Enable Category
+            type: boolean
+      - name: faqs
+        label: FAQ Items
+        type: object
+        list:
+          min: 1
+          collapsible: true
+          summary: '{question}'
+        fields:
+          - name: id
+            label: FAQ ID
+            type: string
+          - name: enabled
+            label: Enable FAQ
+            type: boolean
+            default: true
+          - name: category
+            label: Category
+            type: select
+            options:
+              values:
+                - setup
+                - compatibility
+                - warranty
+                - shipping
+          - name: order
+            label: Display Order
+            type: number
+          - name: question
+            label: Question
+            type: string
+            required: true
+          - name: answer
+            label: Answer
+            type: rich-text
+            options:
+              media: images
+
+  # Footer
+  - name: footer
+    label: Footer
+    path: config/footer.json
+    type: file
+    format: json
+    fields:
+      - name: enabled
+        label: Enable Footer
+        type: boolean
+        default: true
+      - name: logo
+        label: Footer Logo
+        type: object
+        fields:
+          - name: src
+            label: Logo Image
+            type: image
+            options:
+              media: images
+          - name: alt
+            label: Alt Text
+            type: string
+          - name: enabled
+            label: Show Logo
+            type: boolean
+      - name: aboutText
+        label: About Text
+        type: text
+      - name: contact
+        label: Contact Information
+        type: object
+        fields:
+          - name: enabled
+            label: Show Contact
+            type: boolean
+          - name: address
+            label: Address
+            type: object
+            fields:
+              - name: text
+                label: Address Text
+                type: string
+              - name: link
+                label: Map Link
+                type: string
+          - name: phone
+            label: Phone
+            type: object
+            fields:
+              - name: text
+                label: Phone Number
+                type: string
+              - name: link
+                label: Phone Link
+                type: string
+          - name: whatsapp
+            label: WhatsApp
+            type: object
+            fields:
+              - name: text
+                label: WhatsApp Text
+                type: string
+              - name: link
+                label: WhatsApp Link
+                type: string
+      - name: social
+        label: Social Media Links
+        type: object
+        fields:
+          - name: enabled
+            label: Show Social Icons
+            type: boolean
+          - name: links
+            label: Social Links
+            type: object
+            list: true
+            fields:
+              - name: platform
+                label: Platform
+                type: select
+                options:
+                  values: [facebook, instagram, twitter, youtube, tiktok, linkedin]
+              - name: icon
+                label: Icon Class
+                type: string
+              - name: url
+                label: Profile URL
+                type: string
+              - name: enabled
+                label: Enable
+                type: boolean
+      - name: menus
+        label: Footer Menus
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: Menu ID
+            type: string
+          - name: title
+            label: Menu Title
+            type: string
+          - name: links
+            label: Links
+            type: object
+            list: true
+            fields:
+              - name: label
+                label: Link Text
+                type: string
+              - name: url
+                label: URL
+                type: string
+              - name: enabled
+                label: Enable Link
+                type: boolean
+      - name: paymentMethods
+        label: Payment Methods
+        type: object
+        fields:
+          - name: enabled
+            label: Show Payment Methods
+            type: boolean
+          - name: icons
+            label: Payment Icons
+            type: object
+            list: true
+            fields:
+              - name: name
+                label: Payment Method Name
+                type: string
+              - name: icon
+                label: Icon Class
+                type: string
+              - name: enabled
+                label: Enable
+                type: boolean
+      - name: copyright
+        label: Copyright Text
+        type: string
+
+settings:
+  content:
+    merge: false
