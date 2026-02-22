@@ -6,8 +6,8 @@
       "enabled": false,
       "background": {
         "type": "image",
-        "src": "/images/hero/hero.jpg",
-        "overlayOpacity": 0.2
+        "src": "/images/hero.jpg",
+        "overlayOpacity": 1
       },
       "headline": {
         "text": "Illuminate Your",
