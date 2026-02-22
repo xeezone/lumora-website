@@ -1,0 +1,67 @@
+{
+  "$schema": "schema.json",
+  "enabled": true,
+  "title": "Frequently Asked Questions",
+  "subtitle": "Find answers to common questions about LUMORA",
+  "categories": [
+    {
+      "id": "setup",
+      "name": "Setup & Installation",
+      "enabled": true
+    },
+    {
+      "id": "compatibility",
+      "name": "Compatibility",
+      "enabled": true
+    },
+    {
+      "id": "warranty",
+      "name": "Warranty & Support",
+      "enabled": true
+    },
+    {
+      "id": "shipping",
+      "name": "Shipping & Delivery",
+      "enabled": true
+    }
+  ],
+  "faqs": [
+    {
+      "id": "faq-1",
+      "enabled": true,
+      "category": "setup",
+      "order": 1,
+      "question": "How do I set up the LUMORA smart lamp?",
+      "answer": "<p>Simply download the LUMORA app, plug in your lamp, and follow the in-app setup guide. The process takes less than 5 minutes and includes automatic Wi-Fi pairing.</p><p>Step-by-step:</p><ol><li>Download the LUMORA app from App Store or Google Play</li><li>Create an account or sign in</li><li>Plug in your lamp and turn it on</li><li>Follow the in-app instructions to connect</li></ol>"
+    },
+    {
+      "id": "faq-2",
+      "enabled": true,
+      "category": "compatibility",
+      "order": 1,
+      "question": "What smart home systems are compatible?",
+      "answer": "<p>LUMORA is compatible with:</p><ul><li>Amazon Alexa (Echo, Dot, Show)</li><li>Google Assistant (Nest Hub, Home, Mini)</li><li>Apple HomeKit (iPhone, iPad, HomePod)</li><li>Samsung SmartThings</li><li>IFTTT for advanced automation</li></ul><p>Works with both iOS and Android devices.</p>"
+    },
+    {
+      "id": "faq-3",
+      "enabled": true,
+      "category": "warranty",
+      "order": 1,
+      "question": "What is the warranty period?",
+      "answer": "<p>We offer a comprehensive 2-year warranty covering all electronic components and manufacturing defects. LED lifespan is guaranteed for 50,000 hours.</p><p>The warranty covers:</p><ul><li>Electronic components</li><li>LED light source</li><li>Power adapter</li><li>Manufacturing defects</li></ul><p>Does not cover physical damage or normal wear and tear.</p>"
+    },
+    {
+      "id": "faq-4",
+      "enabled": true,
+      "category": "shipping",
+      "order": 1,
+      "question": "Do you offer cash on delivery in Pakistan?",
+      "answer": "<p>Yes! We offer cash on delivery across major cities in Pakistan including:</p><ul><li>Karachi</li><li>Lahore</li><li>Islamabad</li><li>Rawalpindi</li><li>Faisalabad</li><li>Multan</li><li>And more...</li></ul><p>Delivery typically takes 2-3 business days. Free shipping on orders over PKR 5000.</p>"
+    }
+  ],
+  "settings": {
+    "allowMultipleOpen": false,
+    "defaultOpen": null,
+    "showCategoryTabs": true
+  }
+}

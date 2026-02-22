@@ -1,0 +1,52 @@
+{
+  "$schema": "schema.json",
+  "enabled": true,
+  "title": "How It Works",
+  "subtitle": "Get started in three simple steps",
+  "steps": [
+    {
+      "id": "step-1",
+      "number": 1,
+      "title": "Download App",
+      "description": "Install the LUMORA app on your smartphone",
+      "icon": {
+        "type": "remixicon",
+        "name": "ri-download-cloud-line",
+        "color": "#D4AF37"
+      },
+      "image": null,
+      "enabled": true
+    },
+    {
+      "id": "step-2",
+      "number": 2,
+      "title": "Connect Device",
+      "description": "Pair your lamp via Bluetooth or Wi-Fi",
+      "icon": {
+        "type": "remixicon",
+        "name": "ri-bluetooth-connect-line",
+        "color": "#D4AF37"
+      },
+      "image": null,
+      "enabled": true
+    },
+    {
+      "id": "step-3",
+      "number": 3,
+      "title": "Enjoy Control",
+      "description": "Customize lighting scenes and schedules",
+      "icon": {
+        "type": "remixicon",
+        "name": "ri-customize-line",
+        "color": "#D4AF37"
+      },
+      "image": null,
+      "enabled": true
+    }
+  ],
+  "connector": {
+    "enabled": true,
+    "style": "line",
+    "color": "#D4AF37"
+  }
+}

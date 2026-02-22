@@ -1,0 +1,68 @@
+{
+  "$schema": "schema.json",
+  "enabled": true,
+  "logo": {
+    "path": "/images/logo.png",
+    "alt": "LUMORA Logo",
+    "width": 64,
+    "height": 64,
+    "link": "/"
+  },
+  "menu": [
+    {
+      "id": "home",
+      "label": "Home",
+      "url": "/",
+      "enabled": true
+    },
+    {
+      "id": "products",
+      "label": "Products",
+      "url": "#products",
+      "enabled": true
+    },
+    {
+      "id": "features",
+      "label": "Features",
+      "url": "#features",
+      "enabled": true
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery",
+      "url": "#gallery",
+      "enabled": true
+    },
+    {
+      "id": "reviews",
+      "label": "Reviews",
+      "url": "#reviews",
+      "enabled": true
+    },
+    {
+      "id": "faq",
+      "label": "FAQ",
+      "url": "#faq",
+      "enabled": true
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "url": "#contact",
+      "enabled": true
+    }
+  ],
+  "ctaButtons": [
+    {
+      "id": "buy-now",
+      "label": "Buy Now",
+      "url": "#product",
+      "variant": "primary",
+      "enabled": true
+    }
+  ],
+  "mobileMenu": {
+    "breakpoint": 768,
+    "closeOnClick": true
+  }
+}

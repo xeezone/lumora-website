@@ -1,0 +1,82 @@
+{
+  "$schema": "schema.json",
+  "enabled": true,
+  "title": "Customer Reviews",
+  "subtitle": "What our customers say about LUMORA",
+  "averageRating": 5.0,
+  "totalReviews": 24,
+  "reviews": [
+    {
+      "id": "review-1",
+      "enabled": true,
+      "author": {
+        "name": "Ahmed Ali",
+        "location": "Karachi, Pakistan",
+        "avatar": {
+          "type": "initials",
+          "initials": "AA",
+          "backgroundColor": "rgba(212, 175, 55, 0.3)",
+          "textColor": "#000000"
+        }
+      },
+      "rating": 5,
+      "title": "Perfect for my home!",
+      "content": "Perfect for my DHA home! The smart features are incredible and the design matches my modern interior perfectly. Highly recommended!",
+      "date": "2024-01-15",
+      "verified": true,
+      "productId": "lumora-pro-001",
+      "images": [],
+      "helpful": 12
+    },
+    {
+      "id": "review-2",
+      "enabled": true,
+      "author": {
+        "name": "Fatima Khan",
+        "location": "Lahore, Pakistan",
+        "avatar": {
+          "type": "initials",
+          "initials": "FK",
+          "backgroundColor": "rgba(212, 175, 55, 0.3)",
+          "textColor": "#000000"
+        }
+      },
+      "rating": 5,
+      "title": "Amazing addition",
+      "content": "Amazing addition to my Gulberg apartment! The app control is so convenient and the lighting quality is exceptional. Worth every penny.",
+      "date": "2024-01-10",
+      "verified": true,
+      "productId": "lumora-pro-001",
+      "images": [],
+      "helpful": 8
+    },
+    {
+      "id": "review-3",
+      "enabled": true,
+      "author": {
+        "name": "Muhammad Hassan",
+        "location": "Islamabad, Pakistan",
+        "avatar": {
+          "type": "initials",
+          "initials": "MH",
+          "backgroundColor": "rgba(212, 175, 55, 0.3)",
+          "textColor": "#000000"
+        }
+      },
+      "rating": 5,
+      "title": "Excellent build quality",
+      "content": "Excellent build quality and the voice control works flawlessly. The energy savings are noticeable on my electricity bill. Great investment!",
+      "date": "2024-01-05",
+      "verified": true,
+      "productId": "lumora-pro-001",
+      "images": [],
+      "helpful": 15
+    }
+  ],
+  "settings": {
+    "allowReviews": true,
+    "moderateReviews": false,
+    "displayVerifiedBadge": true,
+    "reviewsPerPage": 6
+  }
+}

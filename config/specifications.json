@@ -1,0 +1,111 @@
+{
+  "$schema": "schema.json",
+  "enabled": true,
+  "title": "Technical Specifications",
+  "subtitle": "Engineered for perfection",
+  "sections": [
+    {
+      "id": "dimensions",
+      "title": "Dimensions & Design",
+      "specs": [
+        {
+          "label": "Height",
+          "value": "24 inches (61 cm)",
+          "unit": "in/cm"
+        },
+        {
+          "label": "Base Diameter",
+          "value": "8 inches (20 cm)",
+          "unit": "in/cm"
+        },
+        {
+          "label": "Weight",
+          "value": "3.2 lbs (1.45 kg)",
+          "unit": "lbs/kg"
+        },
+        {
+          "label": "Material",
+          "value": "Aluminum & Glass",
+          "unit": null
+        },
+        {
+          "label": "Finish",
+          "value": "Brushed Metal",
+          "unit": null
+        },
+        {
+          "label": "Color Options",
+          "value": "Silver, Gold, Black",
+          "unit": null
+        }
+      ]
+    },
+    {
+      "id": "smart-features",
+      "title": "Smart Features",
+      "specs": [
+        {
+          "label": "Brightness",
+          "value": "2000 Lumens",
+          "unit": "lm"
+        },
+        {
+          "label": "Color Temperature",
+          "value": "2700K - 6500K",
+          "unit": "K"
+        },
+        {
+          "label": "Colors",
+          "value": "16 Million",
+          "unit": null
+        },
+        {
+          "label": "Connectivity",
+          "value": "Wi-Fi, Bluetooth 5.0",
+          "unit": null
+        },
+        {
+          "label": "Voice Control",
+          "value": "Alexa, Google, Siri",
+          "unit": null
+        },
+        {
+          "label": "App Compatibility",
+          "value": "iOS 14+, Android 10+",
+          "unit": null
+        }
+      ]
+    },
+    {
+      "id": "power",
+      "title": "Power & Efficiency",
+      "specs": [
+        {
+          "label": "Power Consumption",
+          "value": "15W",
+          "unit": "W"
+        },
+        {
+          "label": "Input Voltage",
+          "value": "100-240V",
+          "unit": "V"
+        },
+        {
+          "label": "Lifespan",
+          "value": "50,000 hours",
+          "unit": "hrs"
+        },
+        {
+          "label": "Energy Efficiency",
+          "value": "Class A++",
+          "unit": null
+        }
+      ]
+    }
+  ],
+  "downloads": {
+    "enabled": true,
+    "datasheet": "/downloads/lumora-datasheet.pdf",
+    "manual": "/downloads/lumora-manual.pdf"
+  }
+}

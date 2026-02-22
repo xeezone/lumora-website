@@ -1,0 +1,48 @@
+{
+  "$schema": "schema.json",
+  "enabled": true,
+  "categories": [
+    {
+      "id": "smart-lamps",
+      "name": "Smart Lamps",
+      "slug": "smart-lamps",
+      "image": "/images/categories/smart-lamps.jpg",
+      "description": "Intelligent lighting solutions for modern homes",
+      "featured": true,
+      "order": 1,
+      "products": ["lumora-pro-001", "lumora-mini-002"],
+      "seo": {
+        "title": "Smart Lamps Collection",
+        "description": "Discover our collection of smart lamps with voice control and app integration."
+      }
+    },
+    {
+      "id": "premium-lighting",
+      "name": "Premium Lighting",
+      "slug": "premium-lighting",
+      "image": "/images/categories/premium-lighting.jpg",
+      "description": "Luxury lighting fixtures for discerning customers",
+      "featured": true,
+      "order": 2,
+      "products": ["lumora-pro-001", "lumora-table-003"],
+      "seo": {
+        "title": "Premium Lighting Collection",
+        "description": "Elevate your space with our premium lighting collection."
+      }
+    },
+    {
+      "id": "best-sellers",
+      "name": "Best Sellers",
+      "slug": "best-sellers",
+      "image": "/images/categories/best-sellers.jpg",
+      "description": "Our most popular smart lamps",
+      "featured": true,
+      "order": 3,
+      "products": ["lumora-pro-001"],
+      "seo": {
+        "title": "Best Selling Smart Lamps",
+        "description": "Shop our most popular smart lamps loved by customers."
+      }
+    }
+  ]
+}

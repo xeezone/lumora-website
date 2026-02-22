@@ -1,0 +1,205 @@
+{
+  "$schema": "schema.json",
+  "enabled": true,
+  "logo": {
+    "src": "/images/logo.png",
+    "alt": "LUMORA Logo",
+    "width": 120,
+    "enabled": true
+  },
+  "brandName": {
+    "text": "LUMORA™",
+    "fontFamily": "Pacifico",
+    "color": "#D4AF37",
+    "enabled": true
+  },
+  "aboutText": "Illuminating luxury living with smart technology and elegant design.",
+  "contact": {
+    "enabled": true,
+    "address": {
+      "icon": "ri-map-pin-line",
+      "text": "F-7 Markaz, Islamabad, Pakistan",
+      "link": "https://maps.google.com/?q=F-7+Markaz+Islamabad"
+    },
+    "phone": {
+      "icon": "ri-phone-line",
+      "text": "+923140607452",
+      "link": "tel:+923140607452"
+    },
+    "whatsapp": {
+      "icon": "ri-whatsapp-line",
+      "text": "WhatsApp Available",
+      "link": "https://wa.me/923140607452"
+    },
+    "email": {
+      "icon": "ri-mail-line",
+      "text": "info@lumora.com",
+      "link": "mailto:info@lumora.com"
+    }
+  },
+  "social": {
+    "enabled": true,
+    "links": [
+      {
+        "platform": "facebook",
+        "icon": "ri-facebook-fill",
+        "url": "https://facebook.com/lumora",
+        "enabled": true
+      },
+      {
+        "platform": "instagram",
+        "icon": "ri-instagram-line",
+        "url": "https://instagram.com/lumora",
+        "enabled": true
+      },
+      {
+        "platform": "twitter",
+        "icon": "ri-twitter-line",
+        "url": "https://twitter.com/lumora",
+        "enabled": true
+      },
+      {
+        "platform": "youtube",
+        "icon": "ri-youtube-line",
+        "url": "https://youtube.com/@lumora",
+        "enabled": false
+      },
+      {
+        "platform": "tiktok",
+        "icon": "ri-tiktok-line",
+        "url": "https://tiktok.com/@lumora",
+        "enabled": false
+      }
+    ]
+  },
+  "menus": [
+    {
+      "id": "products",
+      "title": "Products",
+      "links": [
+        {
+          "label": "Smart Lamps",
+          "url": "/category/smart-lamps",
+          "enabled": true
+        },
+        {
+          "label": "Premium Collection",
+          "url": "/category/premium-lighting",
+          "enabled": true
+        },
+        {
+          "label": "Best Sellers",
+          "url": "/category/best-sellers",
+          "enabled": true
+        },
+        {
+          "label": "New Arrivals",
+          "url": "/category/new-arrivals",
+          "enabled": false
+        }
+      ]
+    },
+    {
+      "id": "support",
+      "title": "Support",
+      "links": [
+        {
+          "label": "FAQ",
+          "url": "#faq",
+          "enabled": true
+        },
+        {
+          "label": "Shipping Policy",
+          "url": "/shipping",
+          "enabled": true
+        },
+        {
+          "label": "Returns & Warranty",
+          "url": "/warranty",
+          "enabled": true
+        },
+        {
+          "label": "Contact Us",
+          "url": "#contact",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "company",
+      "title": "Company",
+      "links": [
+        {
+          "label": "About Us",
+          "url": "/about",
+          "enabled": true
+        },
+        {
+          "label": "Blog",
+          "url": "/blog",
+          "enabled": false
+        },
+        {
+          "label": "Careers",
+          "url": "/careers",
+          "enabled": false
+        },
+        {
+          "label": "Privacy Policy",
+          "url": "/privacy",
+          "enabled": true
+        }
+      ]
+    }
+  ],
+  "map": {
+    "enabled": true,
+    "placeholder": "Map location: F-7 Markaz, Islamabad",
+    "embedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3320.123456!2d73.0!3d33.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDQyJzAwLjAiTiA3M8KwMDAnMDAuMCJF!5e0!3m2!1sen!2s!4v1234567890",
+    "height": 192
+  },
+  "paymentMethods": {
+    "enabled": true,
+    "title": "We Accept",
+    "icons": [
+      {
+        "name": "Visa",
+        "icon": "ri-visa-line",
+        "enabled": true
+      },
+      {
+        "name": "Mastercard",
+        "icon": "ri-mastercard-line",
+        "enabled": true
+      },
+      {
+        "name": "Cash on Delivery",
+        "icon": "ri-money-cny-circle-line",
+        "enabled": true
+      },
+      {
+        "name": "Bank Transfer",
+        "icon": "ri-bank-line",
+        "enabled": true
+      }
+    ]
+  },
+  "copyright": "© 2024 LUMORA™. All rights reserved. | Luxury Smart Lighting Solutions",
+  "bottomLinks": [
+    {
+      "label": "Privacy Policy",
+      "url": "/privacy",
+      "enabled": true
+    },
+    {
+      "label": "Terms of Service",
+      "url": "/terms",
+      "enabled": true
+    },
+    {
+      "label": "Cookie Policy",
+      "url": "/cookies",
+      "enabled": false
+    }
+  ]
+}

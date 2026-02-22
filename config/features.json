@@ -1,0 +1,72 @@
+{
+  "$schema": "schema.json",
+  "enabled": true,
+  "title": "Premium Features",
+  "subtitle": "Discover what makes LUMORA extraordinary",
+  "layout": "grid",
+  "columns": 3,
+  "cards": [
+    {
+      "id": "feature-1",
+      "enabled": true,
+      "title": "Smart Control",
+      "description": "Control via smartphone app with voice commands, scheduling, and custom lighting scenes",
+      "icon": {
+        "type": "remixicon",
+        "name": "ri-smartphone-line",
+        "color": "#D4AF37",
+        "backgroundColor": "rgba(212, 175, 55, 0.2)",
+        "size": 24
+      },
+      "image": null,
+      "button": {
+        "text": "Learn More",
+        "url": "#smart-control",
+        "enabled": false
+      }
+    },
+    {
+      "id": "feature-2",
+      "enabled": true,
+      "title": "Energy Efficient",
+      "description": "Advanced LED technology with 80% energy savings and 50,000-hour lifespan",
+      "icon": {
+        "type": "remixicon",
+        "name": "ri-leaf-line",
+        "color": "#D4AF37",
+        "backgroundColor": "rgba(212, 175, 55, 0.2)",
+        "size": 24
+      },
+      "image": null,
+      "button": {
+        "text": "Learn More",
+        "url": "#energy",
+        "enabled": false
+      }
+    },
+    {
+      "id": "feature-3",
+      "enabled": true,
+      "title": "Modern Design",
+      "description": "Minimalist aesthetic with premium materials and customizable color temperature",
+      "icon": {
+        "type": "remixicon",
+        "name": "ri-palette-line",
+        "color": "#D4AF37",
+        "backgroundColor": "rgba(212, 175, 55, 0.2)",
+        "size": 24
+      },
+      "image": null,
+      "button": {
+        "text": "Learn More",
+        "url": "#design",
+        "enabled": false
+      }
+    }
+  ],
+  "maxCards": null,
+  "animation": {
+    "enabled": true,
+    "type": "scroll-reveal"
+  }
+}

@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="dynamic-title">LUMORA™ - Luxury Smart Lamp</title>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#D4AF37',
+            secondary: '#1A1A1A'
+          },
+          borderRadius: {
+            'none': '0px',
+            'sm': '4px',
+            'DEFAULT': '8px',
+            'md': '12px',
+            'lg': '16px',
+            'xl': '20px',
+            '2xl': '24px',
+            '3xl': '32px',
+            'full': '9999px',
+            'button': '8px'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :where([class^="ri-"])::before {
+      content: "\f3c2";
+    }
+    body {
+      background-color: #0A0A0A;
+      color: #FFFFFF;
+      transition: background-color 0.3s ease;
+    }
+    .hero-bg {
+      background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%);
+    }
+    .gold-gradient {
+      background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+    }
+    .modal-overlay {
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+    }
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .announcement-bar {
+      transition: all 0.3s ease;
+    }
+    [data-enabled="false"] {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Announcement Bar - Dynamic -->
+  <div id="announcement-bar" class="announcement-bar hidden"></div>
+
+  <!-- Header - Dynamic -->
+  <header id="header" class="bg-secondary/90 backdrop-blur-md sticky top-0 z-40"></header>
+
+  <!-- Hero Section - Dynamic -->
+  <section id="hero-section" class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden"></section>
+
+  <!-- Features Section - Dynamic -->
+  <section id="features-section" class="py-20 bg-secondary/50"></section>
+
+  <!-- Gallery Section - Dynamic -->
+  <section id="gallery-section" class="py-20"></section>
+
+  <!-- How It Works Section - Dynamic -->
+  <section id="how-it-works-section" class="py-20 bg-secondary/30"></section>
+
+  <!-- Specifications Section - Dynamic -->
+  <section id="specifications-section" class="py-20"></section>
+
+  <!-- Reviews Section - Dynamic -->
+  <section id="reviews-section" class="py-20 bg-secondary/30"></section>
+
+  <!-- FAQ Section - Dynamic -->
+  <section id="faq-section" class="py-20"></section>
+
+  <!-- Footer - Dynamic -->
+  <footer id="footer" class="bg-secondary py-16"></footer>
+
+  <!-- Product Modal - Dynamic -->
+  <div id="productModal" class="fixed inset-0 modal-overlay hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-gray-900 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div id="product-modal-content" class="p-6"></div>
+    </div>
+  </div>
+
+  <!-- Order Modal - Dynamic -->
+  <div id="orderModal" class="fixed inset-0 modal-overlay hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-gray-900 rounded-2xl max-w-md w-full">
+      <div id="order-modal-content" class="p-6"></div>
+    </div>
+  </div>
+
+  <script>
+    // Global state
+    let siteConfig = {};
+    let headerConfig = {};
+    let heroConfig = {};
+    let featuresConfig = {};
+    let productsConfig = {};
+    let categoriesConfig = {};
+    let galleryConfig = {};
+    let howItWorksConfig = {};
+    let specificationsConfig = {};
+    let reviewsConfig = {};
+    let faqConfig = {};
+    let footerConfig = {};
+    
+    let currentProduct = null;
+    let currentQuantity = 1;
+    let selectedVariant = null;
+
+    // Load all JSON configurations
+    async function loadConfigs() {
+      try {
+        const [
+          site, header, hero, features, products, categories, 
+          gallery, howItWorks, specifications, reviews, faq, footer
+        ] = await Promise.all([
+          fetch('config/site.json').then(res => res.json()).catch(() => ({})),
+          fetch('config/header.json').then(res => res.json()).catch(() => ({ enabled: false })),
+          fetch('config/hero.json').then(res => res.json()).catch(() => ({ enabled: false })),
+          fetch('config/features.json').then(res => res.json()).catch(() => ({ enabled: false })),
+          fetch('config/products.json').then(res => res.json()).catch(() => ({ enabled: false, products: [] })),
+          fetch('config/categories.json').then(res => res.json()).catch(() => ({ enabled: false, categories: [] })),
+          fetch('config/gallery.json').then(res => res.json()).catch(() => ({ enabled: false, images: [] })),
+          fetch('config/how-it-works.json').then(res => res.json()).catch(() => ({ enabled: false, steps: [] })),
+          fetch('config/specifications.json').then(res => res.json()).catch(() => ({ enabled: false, sections: [] })),
+          fetch('config/reviews.json').then(res => res.json()).catch(() => ({ enabled: false, reviews: [] })),
+          fetch('config/faq.json').then(res => res.json()).catch(() => ({ enabled: false, faqs: [] })),
+          fetch('config/footer.json').then(res => res.json()).catch(() => ({ enabled: false }))
+        ]);
+
+        siteConfig = site;
+        headerConfig = header;
+        heroConfig = hero;
+        featuresConfig = features;
+        productsConfig = products;
+        categoriesConfig = categories;
+        galleryConfig = gallery;
+        howItWorksConfig = howItWorks;
+        specificationsConfig = specifications;
+        reviewsConfig = reviews;
+        faqConfig = faq;
+        footerConfig = footer;
+
+        // Set dynamic title
+        if (siteConfig.seo?.title) {
+          document.getElementById('dynamic-title').textContent = siteConfig.seo.title;
+        }
+
+        // Render all sections
+        renderAnnouncementBar();
+        renderHeader();
+        renderHero();
+        renderFeatures();
+        renderGallery();
+        renderHowItWorks();
+        renderSpecifications();
+        renderReviews();
+        renderFAQ();
+        renderFooter();
+
+        // Initialize scroll animations
+        initScrollAnimations();
+        
+        // Initialize FAQ functionality
+        initFAQ();
+
+      } catch (error) {
+        console.error('Error loading configurations:', error);
+      }
+    }
+
+    // Render Announcement Bar
+    function renderAnnouncementBar() {
+      const announcement = siteConfig.announcement;
+      if (!announcement?.enabled) return;
+
+      const bar = document.getElementById('announcement-bar');
+      bar.className = `announcement-bar p-2 text-center text-sm font-medium`;
+      bar.style.backgroundColor = announcement.backgroundColor || '#D4AF37';
+      bar.style.color = announcement.textColor || '#000000';
+      
+      const content = announcement.link 
+        ? `<a href="${announcement.link}" class="hover:underline">${announcement.text}</a>`
+        : announcement.text;
+      
+      bar.innerHTML = content;
+      bar.classList.remove('hidden');
+    }
+
+    // Render Header
+    function renderHeader() {
+      if (!headerConfig.enabled) return;
+
+      const header = document.getElementById('header');
+      const menu = headerConfig.menu || [];
+      const ctaButtons = headerConfig.ctaButtons || [];
+
+      header.innerHTML = `
+        <div class="container mx-auto px-6 py-4">
+          <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <a href="${headerConfig.logo?.link || '/'}" class="flex items-center">
+              ${headerConfig.logo?.path ? `
+                <img src="${headerConfig.logo.path}" alt="${headerConfig.logo.alt || 'Logo'}" 
+                     width="${headerConfig.logo.width || 64}" height="${headerConfig.logo.height || 64}">
+              ` : ''}
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+              ${menu.filter(item => item.enabled).map(item => `
+                <a href="${item.url}" class="text-gray-300 hover:text-primary transition-colors">${item.label}</a>
+              `).join('')}
+            </nav>
+
+            <!-- CTA Buttons -->
+            <div class="hidden md:flex items-center space-x-4">
+              ${ctaButtons.filter(btn => btn.enabled).map(btn => `
+                <a href="${btn.url}" 
+                   class="${btn.variant === 'primary' ? 'gold-gradient text-black' : 'border border-primary text-primary'} 
+                          px-6 py-2 rounded-button hover:opacity-90 transition-all whitespace-nowrap">
+                  ${btn.label}
+                </a>
+              `).join('')}
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-2xl" onclick="toggleMobileMenu()">
+              <i class="ri-menu-line"></i>
+            </button>
+          </div>
+
+          <!-- Mobile Menu -->
+          <div id="mobile-menu" class="hidden md:hidden mt-4 py-4 border-t border-gray-700">
+            ${menu.filter(item => item.enabled).map(item => `
+              <a href="${item.url}" class="block py-2 text-gray-300 hover:text-primary">${item.label}</a>
+            `).join('')}
+            <div class="flex flex-col space-y-2 mt-4">
+              ${ctaButtons.filter(btn => btn.enabled).map(btn => `
+                <a href="${btn.url}" 
+                   class="${btn.variant === 'primary' ? 'gold-gradient text-black' : 'border border-primary text-primary'} 
+                          px-6 py-3 rounded-button text-center">
+                  ${btn.label}
+                </a>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Render Hero Section
+    function renderHero() {
+      if (!heroConfig.enabled || !heroConfig.slides?.length) return;
+
+      const section = document.getElementById('hero-section');
+      const slide = heroConfig.slides[0]; // Using first slide for simplicity
+      
+      section.innerHTML = `
+        <div class="absolute inset-0 opacity-${Math.round((slide.background?.overlayOpacity || 0.2) * 100)}">
+          <img src="${slide.background?.src || '/images/hero/hero.jpg'}" 
+               alt="${slide.background?.alt || 'Hero Background'}" 
+               class="w-full h-full object-cover object-center">
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+          <div class="text-center mb-12">
+            ${slide.logo?.enabled ? `
+              <img src="${slide.logo.src}" alt="${slide.logo.alt}" class="h-16 mx-auto mb-2">
+            ` : ''}
+            ${slide.brandName?.enabled ? `
+              <h1 class="font-['Pacifico'] text-6xl" style="color: ${slide.brandName.color}">${slide.brandName.text}</h1>
+            ` : ''}
+            ${slide.tagline?.enabled ? `
+              <p class="text-gray-300 text-lg">${slide.tagline.text}</p>
+            ` : ''}
+          </div>
+          <div class="flex flex-col lg:flex-row items-center justify-between max-w-6xl mx-auto">
+            <div class="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0">
+              <h2 class="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                ${slide.headline?.text || ''} 
+                ${slide.headline?.highlightedText ? `
+                  <span class="text-primary">${slide.headline.highlightedText}</span>
+                ` : ''}
+              </h2>
+              ${slide.subheadline?.enabled ? `
+                <p class="text-xl text-gray-300 mb-8 leading-relaxed">${slide.subheadline.text}</p>
+              ` : ''}
+              ${slide.price?.enabled ? `
+                <div class="mb-8">
+                  <span class="text-4xl font-bold text-primary">PKR ${slide.price.current}</span>
+                  ${slide.price.original ? `
+                    <span class="text-lg text-gray-400 line-through ml-3">PKR ${slide.price.original}</span>
+                  ` : ''}
+                </div>
+              ` : ''}
+              ${slide.primaryButton?.enabled ? `
+                <button onclick="openProductModal('${productsConfig.products?.[0]?.id}')" 
+                        class="gold-gradient text-black px-8 py-4 !rounded-button text-lg font-semibold 
+                               hover:shadow-lg transform hover:scale-105 transition-all duration-300 whitespace-nowrap">
+                  ${slide.primaryButton.text}
+                </button>
+              ` : ''}
+            </div>
+            ${slide.productImage?.src ? `
+              <div class="lg:w-1/2 flex justify-center">
+                <div class="relative">
+                  <img src="${slide.productImage.src}" alt="${slide.productImage.alt}" 
+                       class="w-96 h-auto object-contain ${slide.productImage.animation ? 'animate-' + slide.productImage.animation : ''}">
+                  ${slide.productImage.glowEffect ? `
+                    <div class="absolute -inset-4 bg-primary/20 rounded-full blur-3xl"></div>
+                  ` : ''}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    // Render Features Cards
+    function renderFeatures() {
+      if (!featuresConfig.enabled || !featuresConfig.cards?.length) return;
+
+      const section = document.getElementById('features-section');
+      
+      section.innerHTML = `
+        <div class="container mx-auto px-6">
+          <h2 class="text-4xl font-bold text-center mb-16 scroll-reveal">${featuresConfig.title || 'Premium Features'}</h2>
+          ${featuresConfig.subtitle ? `
+            <p class="text-center text-gray-300 mb-12 max-w-2xl mx-auto">${featuresConfig.subtitle}</p>
+          ` : ''}
+          <div class="grid md:grid-cols-${featuresConfig.columns || 3} gap-8 max-w-5xl mx-auto">
+            ${featuresConfig.cards.filter(card => card.enabled).map(card => `
+              <div class="text-center p-8 bg-gray-900/50 rounded-2xl hover:bg-gray-800/50 transition-all duration-300 scroll-reveal">
+                ${card.icon ? `
+                  <div class="w-16 h-16 flex items-center justify-center mx-auto mb-6 rounded-full"
+                       style="background-color: ${card.icon.backgroundColor || 'rgba(212, 175, 55, 0.2)'}">
+                    <i class="${card.icon.name}" style="color: ${card.icon.color || '#D4AF37'}; font-size: ${card.icon.size || 24}px"></i>
+                  </div>
+                ` : ''}
+                <h3 class="text-xl font-semibold mb-4">${card.title}</h3>
+                <p class="text-gray-300">${card.description}</p>
+                ${card.button?.enabled ? `
+                  <a href="${card.button.url}" class="inline-block mt-6 text-primary hover:underline">${card.button.text}</a>
+                ` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // Render Gallery
+    function renderGallery() {
+      if (!galleryConfig.enabled || !galleryConfig.images?.length) return;
+
+      const section = document.getElementById('gallery-section');
+      const images = galleryConfig.images.filter(img => img.enabled).sort((a, b) => (a.order || 0) - (b.order || 0));
+      
+      section.innerHTML = `
+        <div class="container mx-auto px-6">
+          <h2 class="text-4xl font-bold text-center mb-16 scroll-reveal">${galleryConfig.title || 'Lifestyle Gallery'}</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            ${images.map((img, index) => `
+              <div class="${index === 0 ? 'md:col-span-2' : ''} ${index === 3 ? 'md:col-span-2' : ''} scroll-reveal">
+                <img src="${img.src}" alt="${img.alt || img.caption}" 
+                     class="w-full h-${index < 2 ? '80' : '64'} object-cover rounded-2xl hover:scale-105 transition-transform duration-300">
+                ${img.caption ? `
+                  <p class="text-center mt-2 text-gray-400">${img.caption}</p>
+                ` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // Render How It Works
+    function renderHowItWorks() {
+      if (!howItWorksConfig.enabled || !howItWorksConfig.steps?.length) return;
+
+      const section = document.getElementById('how-it-works-section');
+      const steps = howItWorksConfig.steps.filter(step => step.enabled).sort((a, b) => a.number - b.number);
+      
+      section.innerHTML = `
+        <div class="container mx-auto px-6">
+          <h2 class="text-4xl font-bold text-center mb-16 scroll-reveal">${howItWorksConfig.title || 'How It Works'}</h2>
+          <div class="flex flex-col md:flex-row justify-center items-center max-w-5xl mx-auto space-y-8 md:space-y-0 md:space-x-12">
+            ${steps.map((step, index) => `
+              <div class="text-center scroll-reveal">
+                <div class="w-20 h-20 flex items-center justify-center mx-auto mb-6 bg-primary rounded-full text-black text-2xl font-bold">
+                  ${step.number}
+                </div>
+                <h3 class="text-xl font-semibold mb-4">${step.title}</h3>
+                <p class="text-gray-300">${step.description}</p>
+              </div>
+              ${index < steps.length - 1 ? `
+                <div class="hidden md:block w-16 h-0.5 bg-primary"></div>
+              ` : ''}
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // Render Specifications
+    function renderSpecifications() {
+      if (!specificationsConfig.enabled || !specificationsConfig.sections?.length) return;
+
+      const section = document.getElementById('specifications-section');
+      
+      section.innerHTML = `
+        <div class="container mx-auto px-6">
+          <h2 class="text-4xl font-bold text-center mb-16 scroll-reveal">${specificationsConfig.title || 'Technical Specifications'}</h2>
+          <div class="max-w-4xl mx-auto bg-gray-900/50 rounded-2xl p-8 scroll-reveal">
+            ${specificationsConfig.sections.map(section => `
+              <div class="mb-8 last:mb-0">
+                <h3 class="text-xl font-semibold mb-6 text-primary">${section.title}</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                  ${section.specs.map(spec => `
+                    <div class="flex justify-between border-b border-gray-700 pb-2">
+                      <span class="text-gray-300">${spec.label}</span>
+                      <span>${spec.value} ${spec.unit ? spec.unit : ''}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // Render Reviews
+    function renderReviews() {
+      if (!reviewsConfig.enabled || !reviewsConfig.reviews?.length) return;
+
+      const section = document.getElementById('reviews-section');
+      const reviews = reviewsConfig.reviews.filter(r => r.enabled);
+      
+      section.innerHTML = `
+        <div class="container mx-auto px-6">
+          <h2 class="text-4xl font-bold text-center mb-16 scroll-reveal">${reviewsConfig.title || 'Customer Reviews'}</h2>
+          <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            ${reviews.map(review => `
+              <div class="bg-gray-900/50 p-6 rounded-2xl scroll-reveal">
+                <div class="flex items-center mb-4">
+                  ${review.author.avatar?.type === 'initials' ? `
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center mr-4 text-xl font-bold"
+                         style="background-color: ${review.author.avatar.backgroundColor || 'rgba(212, 175, 55, 0.3)'}; color: ${review.author.avatar.textColor || '#000'}">
+                      ${review.author.avatar.initials}
+                    </div>
+                  ` : ''}
+                  <div>
+                    <h4 class="font-semibold">${review.author.name}</h4>
+                    <p class="text-sm text-gray-400">${review.author.location || ''}</p>
+                  </div>
+                </div>
+                <div class="flex mb-4">
+                  ${Array(5).fill(0).map((_, i) => `
+                    <i class="ri-star-${i < review.rating ? 'fill' : 'line'} text-primary"></i>
+                  `).join('')}
+                </div>
+                <p class="text-gray-300">"${review.content}"</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // Render FAQ
+    function renderFAQ() {
+      if (!faqConfig.enabled || !faqConfig.faqs?.length) return;
+
+      const section = document.getElementById('faq-section');
+      const faqs = faqConfig.faqs.filter(f => f.enabled).sort((a, b) => a.order - b.order);
+      
+      section.innerHTML = `
+        <div class="container mx-auto px-6">
+          <h2 class="text-4xl font-bold text-center mb-16 scroll-reveal">${faqConfig.title || 'Frequently Asked Questions'}</h2>
+          <div class="max-w-3xl mx-auto space-y-4" id="faq-container">
+            ${faqs.map(faq => `
+              <div class="faq-item bg-gray-900/50 rounded-xl overflow-hidden scroll-reveal" data-faq-id="${faq.id}">
+                <button class="faq-question w-full text-left p-6 flex justify-between items-center hover:bg-gray-800/50 transition-colors">
+                  <span class="font-semibold">${faq.question}</span>
+                  <i class="ri-add-line text-primary text-xl transition-transform duration-300"></i>
+                </button>
+                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
+                  <div class="p-6 pt-0 text-gray-300">
+                    ${faq.answer}
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // Render Footer
+    function renderFooter() {
+      if (!footerConfig.enabled) return;
+
+      const footer = document.getElementById('footer');
+      
+      footer.innerHTML = `
+        <div class="container mx-auto px-6">
+          <div class="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+            <div>
+              ${footerConfig.logo?.enabled ? `
+                <img src="${footerConfig.logo.src}" alt="${footerConfig.logo.alt}" class="h-16 mb-6">
+              ` : ''}
+              ${footerConfig.brandName?.enabled ? `
+                <h3 class="font-['Pacifico'] text-3xl text-primary mb-6">${footerConfig.brandName.text}</h3>
+              ` : ''}
+              <p class="text-gray-300 mb-6">${footerConfig.aboutText || ''}</p>
+              ${footerConfig.social?.enabled ? `
+                <div class="flex space-x-4">
+                  ${footerConfig.social.links.filter(l => l.enabled).map(link => `
+                    <a href="${link.url}" target="_blank" rel="noopener noreferrer" 
+                       class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary hover:text-black transition-colors">
+                      <i class="${link.icon}"></i>
+                    </a>
+                  `).join('')}
+                </div>
+              ` : ''}
+            </div>
+            ${footerConfig.contact?.enabled ? `
+              <div>
+                <h4 class="text-xl font-semibold mb-6">Contact Info</h4>
+                <div class="space-y-4 text-gray-300">
+                  ${footerConfig.contact.address?.text ? `
+                    <div class="flex items-center">
+                      <div class="w-6 h-6 flex items-center justify-center mr-3">
+                        <i class="ri-map-pin-line text-primary"></i>
+                      </div>
+                      ${footerConfig.contact.address.link ? 
+                        `<a href="${footerConfig.contact.address.link}" target="_blank" class="hover:text-primary">${footerConfig.contact.address.text}</a>` : 
+                        `<span>${footerConfig.contact.address.text}</span>`
+                      }
+                    </div>
+                  ` : ''}
+                  ${footerConfig.contact.phone?.text ? `
+                    <div class="flex items-center">
+                      <div class="w-6 h-6 flex items-center justify-center mr-3">
+                        <i class="ri-phone-line text-primary"></i>
+                      </div>
+                      ${footerConfig.contact.phone.link ? 
+                        `<a href="${footerConfig.contact.phone.link}" class="hover:text-primary">${footerConfig.contact.phone.text}</a>` : 
+                        `<span>${footerConfig.contact.phone.text}</span>`
+                      }
+                    </div>
+                  ` : ''}
+                  ${footerConfig.contact.whatsapp?.text ? `
+                    <div class="flex items-center">
+                      <div class="w-6 h-6 flex items-center justify-center mr-3">
+                        <i class="ri-whatsapp-line text-primary"></i>
+                      </div>
+                      ${footerConfig.contact.whatsapp.link ? 
+                        `<a href="${footerConfig.contact.whatsapp.link}" target="_blank" class="hover:text-primary">${footerConfig.contact.whatsapp.text}</a>` : 
+                        `<span>${footerConfig.contact.whatsapp.text}</span>`
+                      }
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            ` : ''}
+            <div>
+              <h4 class="text-xl font-semibold mb-6">Location</h4>
+              <div class="bg-gray-800 rounded-xl overflow-hidden h-48">
+                ${footerConfig.map?.enabled && footerConfig.map.embedUrl ? `
+                  <iframe src="${footerConfig.map.embedUrl}" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                ` : `
+                  <div class="w-full h-full bg-gray-700 flex items-center justify-center text-gray-400">
+                    ${footerConfig.map?.placeholder || 'Map location'}
+                  </div>
+                `}
+              </div>
+            </div>
+          </div>
+          
+          ${footerConfig.paymentMethods?.enabled ? `
+            <div class="mt-12 pt-8 border-t border-gray-700 text-center">
+              <p class="text-sm text-gray-400 mb-4">${footerConfig.paymentMethods.title || 'We Accept'}</p>
+              <div class="flex justify-center space-x-4">
+                ${footerConfig.paymentMethods.icons.filter(i => i.enabled).map(icon => `
+                  <i class="${icon.icon} text-2xl text-gray-400"></i>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+          
+          <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
+            <p>${footerConfig.copyright || '© 2024 LUMORA™. All rights reserved.'}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // Product Modal Functions
+    function openProductModal(productId) {
+      const product = productsConfig.products?.find(p => p.id === productId);
+      if (!product) return;
+
+      currentProduct = product;
+      currentQuantity = 1;
+      selectedVariant = product.variants?.enabled ? product.variants.combinations?.[0] : null;
+
+      const modalContent = document.getElementById('product-modal-content');
+      modalContent.innerHTML = `
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold">${product.title}</h3>
+          <button onclick="closeProductModal()" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 transition-colors">
+            <i class="ri-close-line"></i>
+          </button>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <div class="relative mb-4">
+              <img id="mainProductImage" src="${product.media?.mainImage}" alt="${product.title}" 
+                   class="w-full h-80 object-contain rounded-xl bg-gray-800">
+            </div>
+            ${product.media?.gallery?.length > 0 ? `
+              <div class="flex space-x-2 overflow-x-auto">
+                ${product.media.gallery.map((img, index) => `
+                  <img onclick="changeProductImage(this)" src="${img.src}" data-large="${img.src}" 
+                       class="w-16 h-16 object-contain rounded-lg bg-gray-800 cursor-pointer border-2 ${index === 0 ? 'border-primary' : 'border-transparent'} hover:border-primary">
+                `).join('')}
+              </div>
+            ` : ''}
+          </div>
+          <div>
+            <div class="mb-6">
+              <span class="text-3xl font-bold text-primary">
+                ${product.currency || 'PKR'} ${selectedVariant ? product.price + (selectedVariant.priceAdjustment || 0) : product.price}
+              </span>
+              ${product.comparePrice ? `
+                <span class="text-lg text-gray-400 line-through ml-3">${product.currency || 'PKR'} ${product.comparePrice}</span>
+              ` : ''}
+            </div>
+            
+            ${product.variants?.enabled && product.variants.options?.length > 0 ? `
+              <div class="mb-6">
+                ${product.variants.options.map(option => `
+                  <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">${option.name}</label>
+                    <div class="flex flex-wrap gap-2">
+                      ${option.values.map(value => `
+                        <button onclick="selectVariantOption('${option.name}', '${value}')"
+                                class="px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors variant-option"
+                                data-option-name="${option.name}" data-option-value="${value}">
+                          ${value}
+                        </button>
+                      `).join('')}
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+            
+            <p class="text-gray-300 mb-6">${product.shortDescription || ''}</p>
+            
+            <div class="mb-6">
+              <label class="block text-sm font-medium mb-2">Quantity</label>
+              <div class="flex items-center space-x-3">
+                <button onclick="decreaseQuantity()" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 transition-colors">
+                  <i class="ri-subtract-line"></i>
+                </button>
+                <span id="quantity" class="text-xl font-semibold w-8 text-center">${currentQuantity}</span>
+                <button onclick="increaseQuantity()" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 transition-colors">
+                  <i class="ri-add-line"></i>
+                </button>
+              </div>
+            </div>
+            
+            <button onclick="openOrderModal()" 
+                    class="w-full gold-gradient text-black py-4 !rounded-button text-lg font-semibold hover:shadow-lg transition-all duration-300 whitespace-nowrap">
+              ${product.buttons?.buyNow?.text || 'Order Now'}
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('productModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    function openOrderModal() {
+      closeProductModal();
+      
+      const modalContent = document.getElementById('order-modal-content');
+      modalContent.innerHTML = `
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold">Complete Your Order</h3>
+          <button onclick="closeOrderModal()" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 transition-colors">
+            <i class="ri-close-line"></i>
+          </button>
+        </div>
+        <form id="orderForm" class="space-y-4" onsubmit="submitOrder(event)">
+          <div>
+            <label class="block text-sm font-medium mb-2">First Name *</label>
+            <input type="text" id="firstName" required class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-primary focus:outline-none text-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Last Name *</label>
+            <input type="text" id="lastName" required class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-primary focus:outline-none text-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Address *</label>
+            <textarea id="address" required rows="3" class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-primary focus:outline-none text-sm resize-none"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">WhatsApp Number *</label>
+            <input type="tel" id="whatsapp" required class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-primary focus:outline-none text-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Notes (Optional)</label>
+            <textarea id="notes" rows="2" class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-primary focus:outline-none text-sm resize-none"></textarea>
+          </div>
+          <button type="submit" class="w-full gold-gradient text-black py-4 !rounded-button text-lg font-semibold hover:shadow-lg transition-all duration-300 whitespace-nowrap">
+            Complete Order
+          </button>
+        </form>
+      `;
+
+      document.getElementById('orderModal').classList.remove('hidden');
+    }
+
+    function closeOrderModal() {
+      document.getElementById('orderModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    function submitOrder(e) {
+      e.preventDefault();
+      
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const address = document.getElementById('address').value;
+      const whatsapp = document.getElementById('whatsapp').value;
+      const notes = document.getElementById('notes').value;
+      
+      const price = selectedVariant 
+        ? currentProduct.price + (selectedVariant.priceAdjustment || 0) 
+        : currentProduct.price;
+      const totalPrice = currentQuantity * price;
+      
+      const message = `Hello! I would like to order:
+Product: ${currentProduct.title}
+Quantity: ${currentQuantity}
+Price: ${currentProduct.currency || 'PKR'} ${totalPrice}
+${selectedVariant ? `Variant: ${JSON.stringify(selectedVariant.attributes)}\n` : ''}
+Customer Details:
+Name: ${firstName} ${lastName}
+Address: ${address}
+WhatsApp: ${whatsapp}
+Notes: ${notes || 'None'}
+Payment Method: Cash on Delivery
+Please confirm my order. Thank you!`;
+
+      const whatsappUrl = `https://wa.me/${siteConfig.site?.whatsapp || '923140607452'}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+      
+      closeOrderModal();
+    }
+
+    function changeProductImage(img) {
+      const largeImageSrc = img.getAttribute('data-large');
+      document.getElementById('mainProductImage').src = largeImageSrc;
+      
+      document.querySelectorAll('#productModal img[onclick]').forEach(thumb => {
+        thumb.classList.remove('border-primary');
+        thumb.classList.add('border-transparent');
+      });
+      img.classList.remove('border-transparent');
+      img.classList.add('border-primary');
+    }
+
+    function increaseQuantity() {
+      currentQuantity++;
+      document.getElementById('quantity').textContent = currentQuantity;
+    }
+
+    function decreaseQuantity() {
+      if (currentQuantity > 1) {
+        currentQuantity--;
+        document.getElementById('quantity').textContent = currentQuantity;
+      }
+    }
+
+    function selectVariantOption(optionName, value) {
+      // Remove selected class from all options of this type
+      document.querySelectorAll(`[data-option-name="${optionName}"]`).forEach(btn => {
+        btn.classList.remove('bg-primary', 'text-black');
+        btn.classList.add('bg-gray-800');
+      });
+      
+      // Add selected class to clicked option
+      event.target.classList.remove('bg-gray-800');
+      event.target.classList.add('bg-primary', 'text-black');
+      
+      // Find matching variant combination
+      const selectedOptions = {};
+      document.querySelectorAll('.variant-option.bg-primary').forEach(btn => {
+        const name = btn.getAttribute('data-option-name');
+        const value = btn.getAttribute('data-option-value');
+        selectedOptions[name] = value;
+      });
+      
+      // Find matching variant
+      selectedVariant = currentProduct.variants?.combinations?.find(combo => {
+        return Object.entries(selectedOptions).every(([key, val]) => combo.attributes[key] === val);
+      });
+      
+      // Update price display
+      if (selectedVariant) {
+        const priceElement = document.querySelector('#productModal .text-3xl');
+        if (priceElement) {
+          const basePrice = currentProduct.price;
+          const totalPrice = basePrice + (selectedVariant.priceAdjustment || 0);
+          priceElement.textContent = `${currentProduct.currency || 'PKR'} ${totalPrice}`;
+        }
+      }
+    }
+
+    // Utility Functions
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    function initScrollAnimations() {
+      const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      }, observerOptions);
+      
+      document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    }
+
+    function initFAQ() {
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('.faq-question')) {
+          const button = e.target.closest('.faq-question');
+          const faqItem = button.closest('.faq-item');
+          const answer = faqItem.querySelector('.faq-answer');
+          const icon = button.querySelector('i');
+          const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+          
+          if (!faqConfig.settings?.allowMultipleOpen) {
+            document.querySelectorAll('.faq-answer').forEach(otherAnswer => {
+              otherAnswer.style.maxHeight = '0px';
+            });
+            document.querySelectorAll('.faq-question i').forEach(otherIcon => {
+              otherIcon.className = 'ri-add-line text-primary text-xl transition-transform duration-300';
+            });
+          }
+          
+          if (!isOpen) {
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+            icon.className = 'ri-subtract-line text-primary text-xl transition-transform duration-300';
+          } else {
+            answer.style.maxHeight = '0px';
+            icon.className = 'ri-add-line text-primary text-xl transition-transform duration-300';
+          }
+        }
+      });
+    }
+
+    // Close modals when clicking overlay
+    document.addEventListener('click', (e) => {
+      if (e.target.id === 'productModal') closeProductModal();
+      if (e.target.id === 'orderModal') closeOrderModal();
+    });
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', loadConfigs);
+  </script>
+</body>
+</html>

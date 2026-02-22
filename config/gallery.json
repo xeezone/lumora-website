@@ -1,0 +1,94 @@
+{
+  "$schema": "schema.json",
+  "enabled": true,
+  "title": "Lifestyle Gallery",
+  "subtitle": "See LUMORA in beautiful spaces",
+  "layout": "masonry",
+  "columns": 3,
+  "images": [
+    {
+      "id": "gallery-1",
+      "enabled": true,
+      "src": "/images/gallery/gallery1.jpg",
+      "alt": "Bedroom Setting with LUMORA",
+      "caption": "Bedroom Sanctuary",
+      "description": "Warm ambient lighting for your bedroom",
+      "link": {
+        "url": "#",
+        "enabled": false
+      },
+      "width": 800,
+      "height": 600,
+      "order": 1,
+      "featured": true
+    },
+    {
+      "id": "gallery-2",
+      "enabled": true,
+      "src": "/images/gallery/gallery2.jpg",
+      "alt": "Living Room with LUMORA",
+      "caption": "Living Room Elegance",
+      "description": "Perfect accent lighting for living spaces",
+      "link": {
+        "url": "#",
+        "enabled": false
+      },
+      "width": 800,
+      "height": 600,
+      "order": 2,
+      "featured": true
+    },
+    {
+      "id": "gallery-3",
+      "enabled": true,
+      "src": "/images/gallery/gallery3.jpg",
+      "alt": "Office Setup with LUMORA",
+      "caption": "Home Office",
+      "description": "Adjustable color temperature for productivity",
+      "link": {
+        "url": "#",
+        "enabled": false
+      },
+      "width": 800,
+      "height": 500,
+      "order": 3,
+      "featured": false
+    },
+    {
+      "id": "gallery-4",
+      "enabled": true,
+      "src": "/images/gallery/gallery4.jpg",
+      "alt": "Dining Area with LUMORA",
+      "caption": "Dining Experience",
+      "description": "Set the mood for any meal",
+      "link": {
+        "url": "#",
+        "enabled": false
+      },
+      "width": 800,
+      "height": 500,
+      "order": 4,
+      "featured": false
+    },
+    {
+      "id": "gallery-5",
+      "enabled": true,
+      "src": "/images/gallery/gallery5.jpg",
+      "alt": "Additional LUMORA Setting",
+      "caption": "Versatile Design",
+      "description": "Adapts to any interior style",
+      "link": {
+        "url": "#",
+        "enabled": false
+      },
+      "width": 800,
+      "height": 600,
+      "order": 5,
+      "featured": false
+    }
+  ],
+  "animation": {
+    "enabled": true,
+    "hoverEffect": "scale"
+  }
+}

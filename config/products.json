@@ -1,0 +1,148 @@
+{
+  "$schema": "schema.json",
+  "enabled": true,
+  "products": [
+    {
+      "id": "lumora-pro-001",
+      "enabled": true,
+      "sku": "LMP-001",
+      "title": "LUMORA™ Luxury Smart Lamp",
+      "shortDescription": "Premium smart lamp with voice control and customizable lighting",
+      "fullDescription": "<p>Transform your space with the LUMORA™ luxury smart lamp. Features app control, voice commands, customizable lighting scenes, and energy-efficient LED technology in a stunning minimalist design.</p><ul><li>Premium aluminum construction</li><li>16 million colors</li><li>Voice control compatible</li></ul>",
+      "price": 2899,
+      "comparePrice": 3500,
+      "currency": "PKR",
+      "stockQuantity": 100,
+      "stockStatus": "in_stock",
+      "categories": ["smart-lamps", "premium-lighting"],
+      "tags": ["luxury", "smart", "led", "voice-control"],
+      "featured": true,
+      "new": true,
+      "badge": {
+        "text": "Best Seller",
+        "color": "#D4AF37",
+        "enabled": true
+      },
+      "media": {
+        "mainImage": "/images/products/productimg1.jpg",
+        "gallery": [
+          {
+            "src": "/images/products/productimg1.jpg",
+            "alt": "LUMORA Lamp Front View",
+            "order": 1
+          },
+          {
+            "src": "/images/products/productimg1.jpg",
+            "alt": "LUMORA Lamp Side View",
+            "order": 2
+          },
+          {
+            "src": "/images/products/productimg1.jpg",
+            "alt": "LUMORA Lamp in Living Room",
+            "order": 3
+          },
+          {
+            "src": "/images/products/productimg1.jpg",
+            "alt": "LUMORA Lamp App Control",
+            "order": 4
+          },
+          {
+            "src": "/images/products/productimg1.jpg",
+            "alt": "LUMORA Lamp Night Mode",
+            "order": 5
+          }
+        ],
+        "video": {
+          "url": "https://www.youtube.com/watch?v=example",
+          "enabled": false
+        },
+        "threeSixty": {
+          "enabled": false,
+          "images": []
+        }
+      },
+      "variants": {
+        "enabled": true,
+        "options": [
+          {
+            "name": "Color",
+            "values": ["Silver", "Gold", "Black"],
+            "required": true
+          },
+          {
+            "name": "Size",
+            "values": ["Standard", "Mini"],
+            "required": false
+          },
+          {
+            "name": "Material",
+            "values": ["Aluminum", "Glass", "Wood Base"],
+            "required": false
+          }
+        ],
+        "combinations": [
+          {
+            "id": "var-001",
+            "sku": "LMP-001-SG",
+            "attributes": {
+              "Color": "Silver",
+              "Size": "Standard",
+              "Material": "Aluminum"
+            },
+            "priceAdjustment": 0,
+            "stockQuantity": 40,
+            "enabled": true
+          },
+          {
+            "id": "var-002",
+            "sku": "LMP-001-GD",
+            "attributes": {
+              "Color": "Gold",
+              "Size": "Standard",
+              "Material": "Aluminum"
+            },
+            "priceAdjustment": 500,
+            "stockQuantity": 30,
+            "enabled": true
+          },
+          {
+            "id": "var-003",
+            "sku": "LMP-001-BK",
+            "attributes": {
+              "Color": "Black",
+              "Size": "Standard",
+              "Material": "Glass"
+            },
+            "priceAdjustment": 300,
+            "stockQuantity": 25,
+            "enabled": true
+          }
+        ]
+      },
+      "buttons": {
+        "addToCart": {
+          "text": "Add to Cart",
+          "enabled": true
+        },
+        "buyNow": {
+          "text": "Buy Now",
+          "enabled": true
+        },
+        "outOfStock": {
+          "text": "Out of Stock",
+          "enabled": true
+        },
+        "notifyMe": {
+          "text": "Notify Me When Available",
+          "enabled": true
+        }
+      },
+      "seo": {
+        "title": "LUMORA™ Luxury Smart Lamp - Smart Home Lighting",
+        "description": "Experience the perfect fusion of smart technology and timeless elegance with LUMORA™. Voice control, 16M colors, and energy-efficient LED.",
+        "keywords": "smart lamp, luxury lamp, voice control lamp"
+      },
+      "relatedProducts": ["lumora-mini-002", "lumora-table-003"]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "schema.json",
+  "site": {
+    "name": "LUMORA™",
+    "url": "https://lumora.com",
+    "language": "en",
+    "currency": "PKR",
+    "currencySymbol": "₨",
+    "timezone": "Asia/Karachi",
+    "phone": "+923140607452",
+    "whatsapp": "+923140607452",
+    "email": "info@lumora.com",
+    "address": "F-7 Markaz, Islamabad, Pakistan"
+  },
+  "seo": {
+    "title": "LUMORA™ - Luxury Smart Lamp",
+    "description": "Experience the perfect fusion of cutting-edge smart technology and timeless elegance.",
+    "keywords": "smart lamp, luxury lighting, smart home, LED lamp, voice control",
+    "ogImage": "/images/og-image.jpg"
+  },
+  "announcement": {
+    "enabled": true,
+    "text": "Free Shipping on All Orders!",
+    "link": "/shipping",
+    "backgroundColor": "#D4AF37",
+    "textColor": "#000000"
+  }
+}
