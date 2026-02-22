@@ -1,72 +1,29 @@
 {
-  "$schema": "schema.json",
   "enabled": true,
   "slides": [
     {
       "id": "slide-1",
-      "enabled": true,
+      "enabled": false,
       "background": {
         "type": "image",
         "src": "/images/hero/hero.jpg",
-        "alt": "Luxury Interior with LUMORA",
         "overlayOpacity": 0.2
-      },
-      "logo": {
-        "src": "/images/logo.png",
-        "alt": "LUMORA Logo",
-        "enabled": true
-      },
-      "brandName": {
-        "text": "LUMORA™",
-        "fontFamily": "Pacifico",
-        "color": "#D4AF37",
-        "enabled": true
-      },
-      "tagline": {
-        "text": "Luxury Smart Lighting",
-        "enabled": true
       },
       "headline": {
         "text": "Illuminate Your",
         "highlightedText": "Luxury",
         "highlightColor": "#D4AF37"
       },
-      "subheadline": {
-        "text": "Experience the perfect fusion of cutting-edge smart technology and timeless elegance. The LUMORA™ transforms any space into a sanctuary of sophisticated lighting.",
-        "enabled": true
-      },
       "price": {
+        "enabled": true,
         "current": 2899,
-        "original": 3500,
-        "enabled": true
+        "original": 3500
       },
       "primaryButton": {
         "text": "Buy Now",
         "url": "#product",
-        "enabled": true
-      },
-      "secondaryButton": {
-        "text": "Learn More",
-        "url": "#features",
-        "enabled": true
-      },
-      "productImage": {
-        "src": "/images/hero/product-hero.jpg",
-        "alt": "LUMORA Smart Lamp",
-        "width": 384,
-        "animation": "float",
-        "glowEffect": true
-      },
-      "mobile": {
-        "headline": "Illuminate Your Luxury",
-        "subheadline": "Smart lighting redefined",
-        "imagePosition": "bottom"
+        "enabled": false
       }
     }
-  ],
-  "animation": {
-    "enabled": true,
-    "type": "fade",
-    "duration": 600
-  }
+  ]
 }
