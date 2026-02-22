@@ -1,11 +1,8 @@
 {
-  "$schema": "schema.json",
   "enabled": true,
   "logo": {
-    "path": "/images/logo.png",
+    "path": "/images/WhatsApp Image 2026-02-14 at 2.47.13 AM.jpeg",
     "alt": "LUMORA Logo",
-    "width": 64,
-    "height": 64,
     "link": "/"
   },
   "menu": [
@@ -60,9 +57,5 @@
       "variant": "primary",
       "enabled": true
     }
-  ],
-  "mobileMenu": {
-    "breakpoint": 768,
-    "closeOnClick": true
-  }
+  ]
 }
